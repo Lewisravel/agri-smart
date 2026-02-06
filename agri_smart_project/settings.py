@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'accounts',
     'core',
     'ml_models',
-    'chatbot',
     'api',
 ]
 
