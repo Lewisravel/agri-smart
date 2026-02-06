@@ -269,6 +269,6 @@ def contact(request):
         return redirect('index')
     
     return render(request, 'core/contact.html')
-def chatbot_view(request):
-    """Vue pour la page du chatbot"""
-    return render(request, 'core/chatbot.html')
+#def chatbot_view(request):
+ #   """Vue pour la page du chatbot"""
+ #   return render(request, 'core/chatbot.html')

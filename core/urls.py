@@ -15,5 +15,5 @@ urlpatterns = [
     path('preferences/update/', views.update_preferences, name='update_preferences'),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
-    path('chatbot/', views.chatbot_view, name='chatbot'), 
+    #path('chatbot/', views.chatbot_view, name='chatbot'), 
 ]

@@ -175,30 +175,6 @@
             transform: translateX(26px);
         }
 
-        .chatbot-widget {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-        }
-
-        .chatbot-button {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary-color) 0%, #218838 100%);
-            color: white;
-            border: none;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .chatbot-button:hover {
-            transform: scale(1.1);
-        }
-
         .language-selector {
             margin-left: 1rem;
         }
@@ -260,11 +236,13 @@
                             <i class="fas fa-dollar-sign"></i> Prix
                         </a>
                     </li>
+                    <!-- Chatbot temporairement désactivé
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'chatbot' %}">
                             <i class="fas fa-robot"></i> Chatbot
                         </a>
                     </li>
+                    -->
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'about' %}">
                             <i class="fas fa-info-circle"></i> À propos
@@ -328,12 +306,13 @@
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Chatbot Widget (bouton flottant) -->
+    <!-- Chatbot Widget (bouton flottant) - TEMPORAIREMENT DÉSACTIVÉ
     <div class="chatbot-widget">
         <a href="{% url 'chatbot' %}" class="chatbot-button" title="Ouvrir le chatbot">
             <i class="fas fa-comments"></i>
         </a>
     </div>
+    -->
 
     <!-- Footer -->
     <footer class="footer">
@@ -348,7 +327,7 @@
                     <ul class="list-unstyled">
                         <li><a href="{% url 'about' %}" class="text-white text-decoration-none">À propos</a></li>
                         <li><a href="{% url 'contact' %}" class="text-white text-decoration-none">Contact</a></li>
-                        <li><a href="{% url 'chatbot' %}" class="text-white text-decoration-none">Chatbot</a></li>
+                        <!-- <li><a href="{% url 'chatbot' %}" class="text-white text-decoration-none">Chatbot</a></li> -->
                     </ul>
                 </div>
                 <div class="col-md-4">

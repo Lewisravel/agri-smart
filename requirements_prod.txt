@@ -20,11 +20,3 @@ python-dateutil==2.8.2
 # Channels (optionnel pour WebSocket)
 channels==4.0.0
 daphne==4.0.0
-
-# PyTorch (version CPU - plus légère)
-torch==2.1.0
-torchvision==0.16.0
-
-# NLP pour le chatbot
-transformers==4.35.0
-sentencepiece==0.1.99
