@@ -12,8 +12,8 @@ urlpatterns = [
     path('yield-prediction/', views.yield_prediction_api, name='yield_prediction'),
     path('disease-risk/', views.disease_prediction_api, name='disease_risk'),
     
-    # Chatbot
-    path('chatbot/', views.chatbot_api, name='chatbot'),
+    # Chatbot - TEMPORAIREMENT DÉSACTIVÉ
+    # path('chatbot/', views.chatbot_api, name='chatbot'),
     
     # Data Endpoints
     path('crops/', views.crops_list_api, name='crops_list'),
@@ -24,5 +24,4 @@ urlpatterns = [
     
     # Health Check
     path('health/', views.health_check, name='health_check'),
-    path('chat/', views.chat_message, name='api_chat'),
 ]
