@@ -379,9 +379,99 @@ class AgriculturalChatbot:
 # Instance globale du chatbot
 chatbot_instance = None
 
+"""
+Chatbot simple basé sur des mots-clés
+"""
+
 def get_chatbot():
-    """Retourne l'instance du chatbot (singleton)"""
-    global chatbot_instance
-    if chatbot_instance is None:
-        chatbot_instance = AgriculturalChatbot()
-    return chatbot_instance
+    """Retourne une instance simple du chatbot"""
+    return SimpleChatbot()
+
+
+class SimpleChatbot:
+    """Chatbot simple sans dépendances lourdes"""
+    
+    def get_response(self, message, user_id='anonymous', language='fr'):
+        """Génère une réponse basée sur des mots-clés"""
+        message_lower = message.lower()
+        
+        # Réponses simples basées sur des mots-clés
+        if any(word in message_lower for word in ['maïs', 'mais', 'corn']):
+            response = """Le maïs se cultive ainsi:
+            
+🌱 **Plantation:** Mars-avril (début saison des pluies)
+🌡️ **Température:** 20-30°C idéal
+💧 **Eau:** Besoin régulier
+🌾 **Sol:** pH 5.5-7.0
+⏰ **Récolte:** 90-120 jours
+            """
+        
+        elif any(word in message_lower for word in ['riz', 'rice']):
+            response = """Culture du riz:
+            
+🌱 **Plantation:** Repiquage après 25-30 jours
+💧 **Eau:** Besoin abondant
+🌡️ **Température:** 25-35°C
+⏰ **Récolte:** 120-150 jours
+            """
+        
+        elif any(word in message_lower for word in ['tomate', 'tomato']):
+            response = """Culture de tomate:
+            
+🌱 **Plantation:** Pépinière puis repiquage
+🌡️ **Température:** 18-27°C
+💧 **Arrosage:** Régulier
+⏰ **Récolte:** 70-90 jours
+            """
+        
+        elif any(word in message_lower for word in ['maladie', 'disease', 'traiter']):
+            response = """Gestion des maladies:
+            
+🔍 **Prévention:**
+- Rotation des cultures
+- Bon drainage
+- Espacement adéquat
+
+💊 **Traitement:**
+- Produits biologiques
+- Fongicides si nécessaire
+            """
+        
+        elif any(word in message_lower for word in ['engrais', 'fertilizer', 'npk']):
+            response = """Sur les engrais:
+            
+🌾 **Types:** NPK, organiques
+📊 **Dosage:** Selon culture et sol
+⏰ **Application:** Fractionnée
+            """
+        
+        elif any(word in message_lower for word in ['bonjour', 'salut', 'hello']):
+            response = """Bonjour! 👋
+
+Je suis votre assistant agricole. Je peux vous aider avec:
+🌱 Techniques de culture
+📅 Calendrier agricole
+🐛 Gestion des maladies
+💧 Irrigation
+🌾 Engrais
+
+Posez-moi vos questions!
+            """
+        
+        else:
+            response = """Je suis votre assistant agricole.
+
+Posez-moi des questions sur:
+🌱 Culture (maïs, riz, tomate, manioc)
+🐛 Maladies et parasites
+💧 Irrigation
+🌾 Engrais
+📅 Calendrier agricole
+            """
+        
+        return {
+            'response': response,
+            'intent': 'general',
+            'confidence': 0.8,
+            'sources': []
+        }
