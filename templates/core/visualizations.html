@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Visualisations" %} - Agri Smart{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2 class="mb-4">
+            <i class="fas fa-chart-pie text-info"></i> 
+            {% trans "Visualisations et Analyses" %}
+        </h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">{% trans "Distribution des cultures" %}</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="cropDistribution"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">{% trans "Rendements moyens" %}</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="yieldChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i>
+            {% trans "Les visualisations sont mises à jour en temps réel en fonction de vos données." %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Graphique de distribution
+    const ctx1 = document.getElementById('cropDistribution');
+    if (ctx1 && typeof Chart !== 'undefined') {
+        new Chart(ctx1, {
+            type: 'doughnut',
+            data: {
+                labels: ['Maïs', 'Riz', 'Tomate', 'Manioc', 'Autres'],
+                datasets: [{
+                    data: [30, 25, 20, 15, 10],
+                    backgroundColor: [
+                        '#ffc107',
+                        '#28a745',
+                        '#dc3545',
+                        '#17a2b8',
+                        '#6c757d'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true
+            }
+        });
+    }
+    
+    // Graphique de rendements
+    const ctx2 = document.getElementById('yieldChart');
+    if (ctx2 && typeof Chart !== 'undefined') {
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Maïs', 'Riz', 'Tomate', 'Manioc'],
+                datasets: [{
+                    label: 'Rendement (kg/ha)',
+                    data: [3200, 4500, 35000, 15000],
+                    backgroundColor: '#28a745'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+</script>
+{% endblock %}

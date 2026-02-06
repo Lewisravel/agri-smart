@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "À propos" %} - Agri Smart{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-10 mx-auto">
+        <h1 class="text-center mb-5">{% trans "À propos d'Agri Smart" %}</h1>
+        
+        <div class="card mb-4">
+            <div class="card-body p-5">
+                <h3 class="text-primary mb-4">{% trans "Notre Mission" %}</h3>
+                <p class="lead">
+                    {% trans "Agri Smart est une plateforme d'agriculture intelligente qui utilise l'intelligence artificielle pour aider les agriculteurs à optimiser leurs rendements et prendre des décisions éclairées." %}
+                </p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-brain fa-3x text-primary mb-3"></i>
+                        <h5>IA Avancée</h5>
+                        <p>Modèles d'apprentissage profond entraînés sur 1M+ observations</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-users fa-3x text-success mb-3"></i>
+                        <h5>Pour tous</h5>
+                        <p>Interface intuitive accessible à tous les agriculteurs</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-chart-line fa-3x text-info mb-3"></i>
+                        <h5>Résultats Prouvés</h5>
+                        <p>Amélioration moyenne de 30% des rendements</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

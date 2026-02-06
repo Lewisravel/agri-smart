@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Recommandations de cultures" %} - Agri Smart{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-seedling"></i> {% trans "Recommandations de cultures" %}
+                </h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">
+                                <i class="fas fa-temperature-high"></i> {% trans "Température (°C)" %}
+                            </label>
+                            <input type="number" name="temperature" class="form-control" 
+                                   step="0.1" required placeholder="28.5">
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">
+                                <i class="fas fa-tint"></i> {% trans "Humidité (%)" %}
+                            </label>
+                            <input type="number" name="humidity" class="form-control" 
+                                   step="0.1" required placeholder="75">
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">
+                                <i class="fas fa-cloud-rain"></i> {% trans "Précipitations (mm)" %}
+                            </label>
+                            <input type="number" name="rainfall" class="form-control" 
+                                   required placeholder="1200">
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">
+                                <i class="fas fa-vial"></i> {% trans "pH du sol" %}
+                            </label>
+                            <input type="number" name="soil_ph" class="form-control" 
+                                   step="0.1" required placeholder="6.5">
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">
+                                <i class="fas fa-mountain"></i> {% trans "Type de sol" %}
+                            </label>
+                            <select name="soil_type" class="form-select" required>
+                                <option value="">{% trans "Sélectionner..." %}</option>
+                                <option value="SANDY">{% trans "Sableux" %}</option>
+                                <option value="CLAY">{% trans "Argileux" %}</option>
+                                <option value="LOAM">{% trans "Limoneux" %}</option>
+                                <option value="SILT_LOAM">{% trans "Argilo-limoneux" %}</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">
+                                <i class="fas fa-map-marker-alt"></i> {% trans "Région" %}
+                            </label>
+                            <select name="region" class="form-select" required>
+                                <option value="">{% trans "Sélectionner..." %}</option>
+                                <option value="CENTER">{% trans "Centre" %}</option>
+                                <option value="LITTORAL">{% trans "Littoral" %}</option>
+                                <option value="WEST">{% trans "Ouest" %}</option>
+                                <option value="NORTH">{% trans "Nord" %}</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                        <i class="fas fa-magic"></i> {% trans "Obtenir Recommandations" %}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

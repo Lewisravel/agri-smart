@@ -1,0 +1,277 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}Agri Smart - Agriculture Intelligente pour le Cameroun{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section text-center py-5" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; border-radius: 20px; margin-bottom: 3rem;">
+    <h1 class="display-3 fw-bold mb-3">
+        <i class="fas fa-leaf"></i> Agri Smart
+    </h1>
+    <p class="lead mb-4">
+        {% trans "Plateforme d'Agriculture Intelligente propulsée par l'IA" %}
+    </p>
+    <p class="h5 mb-4">
+        {% trans "Optimisez vos rendements agricoles avec des recommandations personnalisées basées sur l'apprentissage profond" %}
+    </p>
+    <div class="mt-4">
+        {% if not user.is_authenticated %}
+        <a href="#" class="btn btn-light btn-lg me-3">
+            <i class="fas fa-user-plus"></i> {% trans "Créer un compte" %}
+        </a>
+        {% endif %}
+        <a href="{% url 'crop_recommendation' %}" class="btn btn-outline-light btn-lg">
+            <i class="fas fa-seedling"></i> {% trans "Commencer" %}
+        </a>
+    </div>
+</div>
+
+<!-- Statistics -->
+<div class="row mb-5">
+    <div class="col-md-4 mb-3">
+        <div class="card stat-card">
+            <div class="card-body">
+                <i class="fas fa-seedling feature-icon"></i>
+                <h3 class="stat-number">{{ total_crops }}+</h3>
+                <p class="text-muted">{% trans "Cultures analysées" %}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card stat-card">
+            <div class="card-body">
+                <i class="fas fa-users feature-icon"></i>
+                <h3 class="stat-number">{{ total_users }}+</h3>
+                <p class="text-muted">{% trans "Agriculteurs utilisateurs" %}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card stat-card">
+            <div class="card-body">
+                <i class="fas fa-chart-line feature-icon"></i>
+                <h3 class="stat-number">{{ total_predictions }}+</h3>
+                <p class="text-muted">{% trans "Prédictions générées" %}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features -->
+<h2 class="text-center mb-5">
+    <i class="fas fa-star text-warning"></i> {% trans "Fonctionnalités Principales" %}
+</h2>
+
+<div class="row mb-5">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 text-center">
+            <div class="card-body">
+                <i class="fas fa-brain feature-icon"></i>
+                <h4>{% trans "Recommandations IA" %}</h4>
+                <p>{% trans "Obtenez des recommandations de cultures personnalisées basées sur votre sol, climat et localisation grâce à nos modèles d'apprentissage profond." %}</p>
+                <a href="{% url 'crop_recommendation' %}" class="btn btn-primary">
+                    {% trans "Essayer" %} <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 text-center">
+            <div class="card-body">
+                <i class="fas fa-chart-area feature-icon"></i>
+                <h4>{% trans "Prévisions de Rendement" %}</h4>
+                <p>{% trans "Prédisez vos rendements futurs avec précision en tenant compte de multiples facteurs agronomiques et climatiques." %}</p>
+                <a href="{% url 'yield_prediction' %}" class="btn btn-primary">
+                    {% trans "Calculer" %} <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 text-center">
+            <div class="card-body">
+                <i class="fas fa-comments feature-icon"></i>
+                <h4>{% trans "Chatbot Expert" %}</h4>
+                <p>{% trans "Posez vos questions agricoles 24/7 à notre assistant intelligent formé sur des milliers de données agricoles réelles." %}</p>
+                <a href="#" onclick="openChatbot(); return false;" class="btn btn-primary">
+                    {% trans "Discuter" %} <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 text-center">
+            <div class="card-body">
+                <i class="fas fa-bug feature-icon"></i>
+                <h4>{% trans "Gestion des Maladies" %}</h4>
+                <p>{% trans "Identifiez et gérez les maladies et ravageurs avec des recommandations de traitement adaptées à votre situation." %}</p>
+                <a href="#" class="btn btn-primary">
+                    {% trans "Diagnostiquer" %} <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 text-center">
+            <div class="card-body">
+                <i class="fas fa-dollar-sign feature-icon"></i>
+                <h4>{% trans "Prix de Marché" %}</h4>
+                <p>{% trans "Suivez l'évolution des prix des cultures en temps réel et optimisez le moment de vente de vos productions." %}</p>
+                <a href="{% url 'market_prices' %}" class="btn btn-primary">
+                    {% trans "Voir les prix" %} <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 text-center">
+            <div class="card-body">
+                <i class="fas fa-chart-pie feature-icon"></i>
+                <h4>{% trans "Visualisations" %}</h4>
+                <p>{% trans "Analysez vos performances avec des graphiques interactifs et des tableaux de bord intuitifs." %}</p>
+                <a href="{% url 'visualizations' %}" class="btn btn-primary">
+                    {% trans "Explorer" %} <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- How It Works -->
+<div class="card mb-5" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+    <div class="card-body p-5">
+        <h2 class="text-center mb-5">
+            <i class="fas fa-cogs"></i> {% trans "Comment ça marche?" %}
+        </h2>
+        
+        <div class="row">
+            <div class="col-md-3 text-center mb-4">
+                <div class="display-1 text-primary mb-3">1</div>
+                <h4>{% trans "Entrez vos données" %}</h4>
+                <p>{% trans "Fournissez les informations sur votre sol, climat, et localisation" %}</p>
+            </div>
+            <div class="col-md-3 text-center mb-4">
+                <div class="display-1 text-primary mb-3">2</div>
+                <h4>{% trans "IA analyse" %}</h4>
+                <p>{% trans "Nos modèles d'apprentissage profond analysent plus d'1 million de données" %}</p>
+            </div>
+            <div class="col-md-3 text-center mb-4">
+                <div class="display-1 text-primary mb-3">3</div>
+                <h4>{% trans "Recommandations" %}</h4>
+                <p>{% trans "Recevez des conseils personnalisés et pratiques" %}</p>
+            </div>
+            <div class="col-md-3 text-center mb-4">
+                <div class="display-1 text-primary mb-3">4</div>
+                <h4>{% trans "Optimisez" %}</h4>
+                <p>{% trans "Améliorez vos rendements et profitabilité" %}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Technologies -->
+<div class="text-center mb-5">
+    <h2 class="mb-4">
+        <i class="fas fa-microchip"></i> {% trans "Technologies Utilisées" %}
+    </h2>
+    <div class="row">
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <i class="fab fa-python fa-3x text-primary mb-2"></i>
+                    <h5>Python & Django</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <i class="fas fa-brain fa-3x text-success mb-2"></i>
+                    <h5>PyTorch & ML</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <i class="fas fa-robot fa-3x text-info mb-2"></i>
+                    <h5>Hugging Face</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <i class="fas fa-database fa-3x text-warning mb-2"></i>
+                    <h5>Big Data (1M+)</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA -->
+<div class="card bg-success text-white text-center p-5 mb-5">
+    <h2 class="mb-3">{% trans "Prêt à optimiser votre agriculture?" %}</h2>
+    <p class="lead mb-4">{% trans "Rejoignez des milliers d'agriculteurs qui utilisent déjà Agri Smart" %}</p>
+    {% if not user.is_authenticated %}
+    <div>
+        <a href="#" class="btn btn-light btn-lg me-3">
+            <i class="fas fa-user-plus"></i> {% trans "S'inscrire gratuitement" %}
+        </a>
+        <a href="#" class="btn btn-outline-light btn-lg">
+            <i class="fas fa-sign-in-alt"></i> {% trans "Se connecter" %}
+        </a>
+    </div>
+    {% else %}
+    <div>
+        <a href="{% url 'dashboard' %}" class="btn btn-light btn-lg">
+            <i class="fas fa-tachometer-alt"></i> {% trans "Aller au tableau de bord" %}
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Animation des nombres
+    function animateValue(element, start, end, duration) {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            element.innerHTML = Math.floor(progress * (end - start) + start) + '+';
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+
+    // Animer les statistiques au scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const number = entry.target.querySelector('.stat-number');
+                const value = parseInt(number.textContent);
+                animateValue(number, 0, value, 2000);
+                observer.unobserve(entry.target);
+            }
+        });
+    });
+
+    document.querySelectorAll('.stat-card').forEach(card => {
+        observer.observe(card);
+    });
+</script>
+{% endblock %}

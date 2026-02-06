@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Résultats de prévision" %} - Agri Smart{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-10 mx-auto">
+        <h2 class="mb-4">
+            <i class="fas fa-chart-line text-success"></i> 
+            {% trans "Prévisions de rendement" %}
+        </h2>
+        
+        <!-- Carte principale -->
+        <div class="card mb-4 border-success">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">{% trans "Résultats de la prévision" %}</h4>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-6 mb-3">
+                        <div class="p-4 bg-light rounded">
+                            <h6 class="text-muted mb-2">{% trans "Rendement estimé" %}</h6>
+                            <h2 class="text-success mb-0">
+                                {{ prediction.yield_per_ha|floatformat:2 }} kg/ha
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="p-4 bg-light rounded">
+                            <h6 class="text-muted mb-2">{% trans "Production totale estimée" %}</h6>
+                            <h2 class="text-primary mb-0">
+                                {{ prediction.total_production_kg|floatformat:2 }} kg
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-3 p-3 bg-light rounded">
+                    <h6 class="mb-2">
+                        <i class="fas fa-chart-bar"></i> {% trans "Intervalle de confiance (95%)" %}
+                    </h6>
+                    <div class="progress" style="height: 30px;">
+                        <div class="progress-bar bg-success" role="progressbar" 
+                             style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                            {{ prediction.confidence_interval.lower|floatformat:0 }} - 
+                            {{ prediction.confidence_interval.upper|floatformat:0 }} kg/ha
+                        </div>
+                    </div>
+                    <small class="text-muted">
+                        {% trans "Il y a 95% de chances que le rendement réel se situe dans cet intervalle" %}
+                    </small>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recommandations -->
+        {% if prediction.recommendations %}
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">
+                    <i class="fas fa-lightbulb"></i> {% trans "Recommandations pour améliorer le rendement" %}
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {% for rec in prediction.recommendations %}
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h6 class="text-primary">
+                                    <i class="fas fa-check-circle"></i> {{ rec.category }}
+                                </h6>
+                                <p class="mb-2">{{ rec.recommendation }}</p>
+                                <span class="badge bg-success">{{ rec.impact }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Données d'entrée -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="fas fa-info-circle"></i> {% trans "Données utilisées pour la prévision" %}
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <p><strong>{% trans "Culture:" %}</strong> {{ input_data.crop }}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><strong>{% trans "Superficie:" %}</strong> {{ input_data.area_hectares }} ha</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><strong>{% trans "Température:" %}</strong> {{ input_data.temperature }}°C</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><strong>{% trans "Précipitations:" %}</strong> {{ input_data.rainfall }} mm</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><strong>{% trans "pH:" %}</strong> {{ input_data.soil_ph }}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><strong>{% trans "NPK:" %}</strong> {{ input_data.fertilizer_npk }} kg/ha</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center">
+            <a href="{% url 'yield_prediction' %}" class="btn btn-success">
+                <i class="fas fa-redo"></i> {% trans "Nouvelle prévision" %}
+            </a>
+            <a href="{% url 'dashboard' %}" class="btn btn-primary">
+                <i class="fas fa-home"></i> {% trans "Retour au tableau de bord" %}
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Tableau de bord" %} - Agri Smart{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1 class="mb-4">
+            <i class="fas fa-tachometer-alt text-primary"></i> 
+            {% trans "Tableau de bord" %}
+        </h1>
+    </div>
+</div>
+
+<!-- Statistiques -->
+<div class="row mb-4">
+    <div class="col-md-4 mb-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body text-center">
+                <i class="fas fa-home fa-3x mb-3"></i>
+                <h3>{{ farms.count }}</h3>
+                <p>{% trans "Fermes" %}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card bg-success text-white">
+            <div class="card-body text-center">
+                <i class="fas fa-chart-line fa-3x mb-3"></i>
+                <h3>{{ active_seasons }}</h3>
+                <p>{% trans "Saisons actives" %}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card bg-info text-white">
+            <div class="card-body text-center">
+                <i class="fas fa-seedling fa-3x mb-3"></i>
+                <h3>{{ total_area|floatformat:1 }} ha</h3>
+                <p>{% trans "Superficie totale" %}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Mes Fermes -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">
+                    <i class="fas fa-home"></i> {% trans "Mes Fermes" %}
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if farms %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>{% trans "Nom" %}</th>
+                                    <th>{% trans "Région" %}</th>
+                                    <th>{% trans "Superficie" %}</th>
+                                    <th>{% trans "Type de sol" %}</th>
+                                    <th>{% trans "Actions" %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for farm in farms %}
+                                <tr>
+                                    <td>{{ farm.name }}</td>
+                                    <td>{{ farm.get_region_display }}</td>
+                                    <td>{{ farm.area_hectares }} ha</td>
+                                    <td>{{ farm.get_soil_type_display }}</td>
+                                    <td>
+                                        <a href="{% url 'farm_detail' farm.id %}" class="btn btn-sm btn-primary">
+                                            <i class="fas fa-eye"></i> {% trans "Voir" %}
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-home fa-5x text-muted mb-3"></i>
+                        <p class="text-muted">{% trans "Vous n'avez pas encore de fermes enregistrées." %}</p>
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> {% trans "Ajouter une ferme" %}
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Actions Rapides -->
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <i class="fas fa-seedling fa-3x text-primary mb-3"></i>
+                <h5>{% trans "Recommandations de cultures" %}</h5>
+                <p class="text-muted">{% trans "Obtenez des recommandations personnalisées" %}</p>
+                <a href="{% url 'crop_recommendation' %}" class="btn btn-primary">
+                    {% trans "Commencer" %}
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <i class="fas fa-chart-line fa-3x text-success mb-3"></i>
+                <h5>{% trans "Prévisions de rendement" %}</h5>
+                <p class="text-muted">{% trans "Estimez vos rendements futurs" %}</p>
+                <a href="{% url 'yield_prediction' %}" class="btn btn-success">
+                    {% trans "Calculer" %}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
