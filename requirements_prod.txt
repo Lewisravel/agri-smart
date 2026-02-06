@@ -20,3 +20,6 @@ python-dateutil==2.8.2
 # Channels (optionnel pour WebSocket)
 channels==4.0.0
 daphne==4.0.0
+
+# Visualisation
+plotly==5.18.0
