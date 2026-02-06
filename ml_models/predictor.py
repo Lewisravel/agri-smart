@@ -1,20 +1,7 @@
 """
 ML Models - Crop Recommendation and Yield Prediction
-Using pre-trained models and custom logic
+Using scikit-learn only (no torch/transformers needed)
 """
-# Rendre torch optionnel
-try:
-    import torch
-    TORCH_AVAILABLE = True
-except ImportError:
-    TORCH_AVAILABLE = False
-    torch = None
-
-try:
-    from transformers import ...
-    TRANSFORMERS_AVAILABLE = True
-except ImportError:
-    TRANSFORMERS_AVAILABLE = False
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
@@ -427,7 +414,6 @@ class YieldPredictor:
 class DiseasePredictor:
     """
     Prédiction de risques de maladies et ravageurs
-    Utilise des modèles de vision (Hugging Face) pour identification
     """
     
     def __init__(self):
